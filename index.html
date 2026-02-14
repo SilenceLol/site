@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Прием заказов</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Оформление заказа</h2>
+        
+        <!-- Выбор даты -->
+        <div class="form-group">
+            <label>Дата вывоза</label>
+            <select id="dateSelect">
+                <option value="">Загрузка доступных дат...</option>
+            </select>
+        </div>
+
+        <h3>Продукция</h3>
+        
+        <!-- Таблица продукции -->
+        <div class="products-table">
+            <!-- Левая колонка - названия -->
+            <div class="products-names">
+                <div class="product-row header">Наименование</div>
+                <div class="product-row">Гофрокартон</div>
+                <div class="product-row">Стрейч-пленка</div>
+                <div class="product-row">ПВД-пленка</div>
+                <div class="product-row">Евро-паллет</div>
+                <div class="product-row">Мешки биг-беги или полога</div>
+                <div class="product-row">Пластмассовая тара</div>
+                <div class="product-row">Макулатура Белая (формат А4, архив)</div>
+                <div class="product-row">Макулатура (книги, газеты, журналы)</div>
+            </div>
+            
+            <!-- Правая колонка - ввод веса -->
+            <div class="products-weights">
+                <div class="product-row header">Вес (кг)</div>
+                <div class="product-row"><input type="number" class="weight-input" data-product="corrugated" min="0" step="0.1" value="0" placeholder="0"></div>
+                <div class="product-row"><input type="number" class="weight-input" data-product="stretch" min="0" step="0.1" value="0" placeholder="0"></div>
+                <div class="product-row"><input type="number" class="weight-input" data-product="pvd" min="0" step="0.1" value="0" placeholder="0"></div>
+                <div class="product-row"><input type="number" class="weight-input" data-product="pallet" min="0" step="0.1" value="0" placeholder="0"></div>
+                <div class="product-row"><input type="number" class="weight-input" data-product="bigbags" min="0" step="0.1" value="0" placeholder="0"></div>
+                <div class="product-row"><input type="number" class="weight-input" data-product="plastic" min="0" step="0.1" value="0" placeholder="0"></div>
+                <div class="product-row"><input type="number" class="weight-input" data-product="whitePaper" min="0" step="0.1" value="0" placeholder="0"></div>
+                <div class="product-row"><input type="number" class="weight-input" data-product="mixedPaper" min="0" step="0.1" value="0" placeholder="0"></div>
+            </div>
+        </div>
+
+        <!-- Общий вес -->
+        <div class="total-weight" id="totalWeight">Общий вес: 0 кг</div>
+        
+        <!-- Кнопка отправки -->
+        <button id="orderSubmitBtn" class="primary-btn" disabled>Отправить заказ</button>
+        <div id="orderError" class="error-message"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
