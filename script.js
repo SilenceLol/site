@@ -1,33 +1,13 @@
 // Состояние приложения
 let appState = {
-<<<<<<< HEAD
-=======
     selectedDate: null,
-    currentMonth: new Date(),
->>>>>>> 16fc469 (Start)
     availableDates: []
 };
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
     initApp();
-<<<<<<< HEAD
     loadAvailableDates();
-=======
-    generateAvailableDates();
-    renderCalendar();
-    updateMonthYear();
-
-    // Закрытие календаря при клике вне его
-    document.addEventListener('click', function(e) {
-        const wrapper = document.querySelector('.date-picker-wrapper');
-        const dropdown = document.getElementById('calendarDropdown');
-
-        if (!wrapper.contains(e.target) && dropdown.classList.contains('show')) {
-            dropdown.classList.remove('show');
-        }
-    });
->>>>>>> 16fc469 (Start)
 });
 
 // Инициализация обработчиков событий
@@ -36,17 +16,6 @@ function initApp() {
     const weightInputs = document.querySelectorAll('.weight-input');
     weightInputs.forEach(input => {
         input.addEventListener('input', calculateTotalWeight);
-<<<<<<< HEAD
-        // Добавляем поддержку enter для удобства
-        input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                calculateTotalWeight();
-            }
-        });
-    });
-    
-=======
         input.addEventListener('blur', validateInput);
         input.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
@@ -56,202 +25,111 @@ function initApp() {
         });
     });
 
-    // Обработчик для поля выбора даты
-    const dateInput = document.getElementById('datePickerInput');
-    dateInput.addEventListener('click', function(e) {
-        e.stopPropagation();
-        document.getElementById('calendarDropdown').classList.toggle('show');
-    });
-
-    // Обработчики навигации по месяцам
-    document.getElementById('prevMonthBtn').addEventListener('click', function(e) {
-        e.stopPropagation();
-        changeMonth(-1);
-    });
-
-    document.getElementById('nextMonthBtn').addEventListener('click', function(e) {
-        e.stopPropagation();
-        changeMonth(1);
-    });
-
->>>>>>> 16fc469 (Start)
     // Обработчик отправки заказа
     document.getElementById('orderSubmitBtn').addEventListener('click', handleOrderSubmit);
 }
 
-<<<<<<< HEAD
-// Загрузка доступных дат из базы (имитация)
+// Загрузка доступных дат (имитация запроса к БД)
 function loadAvailableDates() {
+    // Показываем загрузку
+    const datesButtons = document.getElementById('datesButtons');
+    datesButtons.innerHTML = '<div class="loading-dates">Загрузка доступных дат...</div>';
+
     // Имитация запроса к серверу
     setTimeout(() => {
-        // Эти даты обычно приходят с сервера
-        appState.availableDates = generateNextTwoWeeks();
-        
-        const dateSelect = document.getElementById('dateSelect');
-        dateSelect.innerHTML = '<option value="">Выберите дату вывоза</option>';
-        
-        appState.availableDates.forEach(date => {
-            const option = document.createElement('option');
-            option.value = date;
-            option.textContent = formatDate(date);
-            dateSelect.appendChild(option);
-        });
-    }, 500);
+        // В будущем здесь будет реальный запрос к БД
+        // fetch('/api/available-dates')
+        //   .then(response => response.json())
+        //   .then(dates => {
+        //       appState.availableDates = dates;
+        //       renderDatesButtons();
+        //   });
+
+        // Генерируем 3 ближайшие даты
+        appState.availableDates = generateNextDates(3);
+        renderDatesButtons();
+    }, 800);
 }
 
-// Генерация дат на ближайшие 2 недели
-function generateNextTwoWeeks() {
+// Генерация ближайших доступных дат
+function generateNextDates(count) {
     const dates = [];
     const today = new Date();
-    
-    for (let i = 1; i <= 14; i++) {
-        const date = new Date(today);
-        date.setDate(today.getDate() + i);
-        // Пропускаем воскресенье (выходной)
-        if (date.getDay() !== 0) {
-            dates.push(date.toISOString().split('T')[0]);
-        }
-    }
-    return dates;
-}
+    let currentDate = new Date(today);
 
-// Форматирование даты для отображения
-function formatDate(dateString) {
-    const date = new Date(dateString);
-    const options = { weekday: 'short', day: 'numeric', month: 'long' };
-    return date.toLocaleDateString('ru-RU', options);
-=======
-// Генерация доступных дат (ближайшие 3 месяца, кроме воскресений)
-function generateAvailableDates() {
-    const dates = [];
-    const today = new Date();
-    const threeMonthsLater = new Date(today);
-    threeMonthsLater.setMonth(today.getMonth() + 3);
+    while (dates.length < count) {
+        currentDate.setDate(currentDate.getDate() + 1);
 
-    const currentDate = new Date(today);
-    currentDate.setHours(0, 0, 0, 0);
-
-    while (currentDate <= threeMonthsLater) {
-        // Пропускаем воскресенье (0 - воскресенье в JS)
+        // Пропускаем воскресенье (0 - воскресенье)
         if (currentDate.getDay() !== 0) {
             dates.push(new Date(currentDate));
         }
-        currentDate.setDate(currentDate.getDate() + 1);
     }
 
-    appState.availableDates = dates;
+    return dates;
 }
 
-// Переключение месяца
-function changeMonth(delta) {
-    appState.currentMonth.setMonth(appState.currentMonth.getMonth() + delta);
-    renderCalendar();
-    updateMonthYear();
-}
+// Рендер кнопок с датами
+function renderDatesButtons() {
+    const datesButtons = document.getElementById('datesButtons');
+    datesButtons.innerHTML = '';
 
-// Обновление отображения месяца и года
-function updateMonthYear() {
+    if (!appState.availableDates || appState.availableDates.length === 0) {
+        datesButtons.innerHTML = '<div class="loading-dates">Нет доступных дат</div>';
+        return;
+    }
+
     const monthNames = [
-        'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
-        'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+        'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+        'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
     ];
-    document.getElementById('currentMonthYear').textContent =
-        `${monthNames[appState.currentMonth.getMonth()]} ${appState.currentMonth.getFullYear()}`;
-}
 
-// Рендер календаря
-function renderCalendar() {
-    const year = appState.currentMonth.getFullYear();
-    const month = appState.currentMonth.getMonth();
+    const weekdayNames = [
+        'Воскресенье', 'Понедельник', 'Вторник', 'Среда',
+        'Четверг', 'Пятница', 'Суббота'
+    ];
 
-    // Получаем первый день месяца
-    const firstDay = new Date(year, month, 1);
-    // Получаем последний день месяца
-    const lastDay = new Date(year, month + 1, 0);
+    appState.availableDates.forEach((date, index) => {
+        const day = date.getDate();
+        const month = monthNames[date.getMonth()];
+        const weekday = weekdayNames[date.getDay()];
+        const dateStr = date.toISOString().split('T')[0];
 
-    // Получаем день недели первого дня (пн=0, вс=6)
-    let startDayOfWeek = firstDay.getDay() - 1;
-    if (startDayOfWeek < 0) startDayOfWeek = 6;
+        const dateBtn = document.createElement('button');
+        dateBtn.type = 'button';
+        dateBtn.className = 'date-btn';
+        dateBtn.dataset.date = dateStr;
 
-    // Генерируем дни
-    const calendarDays = document.getElementById('calendarDays');
-    calendarDays.innerHTML = '';
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    // Пустые ячейки до первого дня месяца
-    for (let i = 0; i < startDayOfWeek; i++) {
-        const emptyDay = document.createElement('div');
-        emptyDay.className = 'calendar-day disabled';
-        emptyDay.textContent = '';
-        calendarDays.appendChild(emptyDay);
-    }
-
-    // Ячейки для дней месяца
-    for (let d = 1; d <= lastDay.getDate(); d++) {
-        const date = new Date(year, month, d);
-        date.setHours(0, 0, 0, 0);
-
-        const dayElement = document.createElement('div');
-        dayElement.className = 'calendar-day';
-        dayElement.textContent = d;
-
-        // Проверяем, доступна ли дата
-        const isAvailable = appState.availableDates.some(availDate =>
-            availDate.toDateString() === date.toDateString()
-        );
-
-        // Проверяем, прошлая ли дата
-        const isPast = date < today;
-
-        // Проверяем, выбранная ли дата
-        const isSelected = appState.selectedDate &&
-            appState.selectedDate.toDateString() === date.toDateString();
-
-        // Проверяем, сегодня ли
-        const isToday = date.toDateString() === today.toDateString();
-
-        if (!isAvailable || isPast) {
-            dayElement.classList.add('disabled');
-        } else {
-            dayElement.addEventListener('click', (e) => {
-                e.stopPropagation();
-                selectDate(date);
-            });
+        // Проверяем, выбрана ли эта дата
+        if (appState.selectedDate &&
+            appState.selectedDate.toDateString() === date.toDateString()) {
+            dateBtn.classList.add('selected');
         }
 
-        if (isSelected) {
-            dayElement.classList.add('selected');
-        }
+        dateBtn.innerHTML = `
+            <span class="date-icon">${day}</span>
+            <span class="date-info">
+                <span class="date-number">${day} ${month}</span>
+                <span class="date-weekday">${weekday}</span>
+            </span>
+        `;
 
-        if (isToday && !isSelected) {
-            dayElement.classList.add('today');
-        }
-
-        calendarDays.appendChild(dayElement);
-    }
+        dateBtn.addEventListener('click', () => selectDate(date));
+        datesButtons.appendChild(dateBtn);
+    });
 }
 
 // Выбор даты
 function selectDate(date) {
     appState.selectedDate = date;
 
-    // Обновляем поле ввода
-    const options = {
-        weekday: 'short',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-    };
-    const formattedDate = date.toLocaleDateString('ru-RU', options);
-    document.getElementById('datePickerInput').value = formattedDate;
-
-    // Закрываем календарь
-    document.getElementById('calendarDropdown').classList.remove('show');
-
-    // Обновляем классы в календаре
-    renderCalendar();
+    // Обновляем выделение кнопок
+    document.querySelectorAll('.date-btn').forEach(btn => {
+        btn.classList.remove('selected');
+        if (btn.dataset.date === date.toISOString().split('T')[0]) {
+            btn.classList.add('selected');
+        }
+    });
 
     // Проверяем возможность отправки
     calculateTotalWeight();
@@ -275,35 +153,19 @@ function validateInput(e) {
     }
 
     calculateTotalWeight();
->>>>>>> 16fc469 (Start)
 }
 
 // Расчет общего веса
 function calculateTotalWeight() {
     const weightInputs = document.querySelectorAll('.weight-input');
     let total = 0;
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> 16fc469 (Start)
     weightInputs.forEach(input => {
         const value = parseFloat(input.value);
         if (!isNaN(value) && value > 0) {
             total += value;
         }
     });
-<<<<<<< HEAD
-    
-    // Округляем до 1 знака после запятой
-    total = Math.round(total * 10) / 10;
-    
-    document.getElementById('totalWeight').textContent = `Общий вес: ${total} кг`;
-    
-    // Активируем/деактивируем кнопку отправки
-    const submitBtn = document.getElementById('orderSubmitBtn');
-    submitBtn.disabled = total < 35;
-=======
 
     total = Math.round(total * 10) / 10;
 
@@ -314,31 +176,10 @@ function calculateTotalWeight() {
     const dateSelected = appState.selectedDate !== null;
 
     submitBtn.disabled = total < 35 || !dateSelected;
->>>>>>> 16fc469 (Start)
 }
 
 // Отправка заказа
 async function handleOrderSubmit() {
-<<<<<<< HEAD
-    const date = document.getElementById('dateSelect').value;
-    
-    if (!date) {
-        document.getElementById('orderError').textContent = 'Выберите дату вывоза';
-        return;
-    }
-    
-    // Собираем данные о продукции
-    const products = {};
-    let totalWeight = 0;
-    
-    document.querySelectorAll('.weight-input').forEach(input => {
-        const weight = parseFloat(input.value) || 0;
-        products[input.dataset.product] = weight;
-        totalWeight += weight;
-    });
-    
-    // Проверка минимального веса (на всякий случай)
-=======
     if (!appState.selectedDate) {
         document.getElementById('orderError').textContent = 'Выберите дату вывоза';
         return;
@@ -356,50 +197,18 @@ async function handleOrderSubmit() {
         totalWeight += weight;
     });
 
->>>>>>> 16fc469 (Start)
     if (totalWeight < 35) {
         document.getElementById('orderError').textContent = 'Общий вес должен быть не менее 35 кг';
         return;
     }
-<<<<<<< HEAD
-    
-    // Показываем индикатор загрузки на кнопке
-=======
 
->>>>>>> 16fc469 (Start)
     const submitBtn = document.getElementById('orderSubmitBtn');
     const originalText = submitBtn.textContent;
     submitBtn.textContent = 'Отправка...';
     submitBtn.disabled = true;
-<<<<<<< HEAD
-    
-    try {
-        // Имитация отправки заказа на сервер
-        const response = await mockServerRequest('/submit-order', {
-            date: date,
-            products: products,
-            totalWeight: totalWeight
-        });
-        
-        if (response.success) {
-            // Успешная отправка
-            alert('Заказ успешно отправлен!');
-            
-            // Очищаем поля веса
-            document.querySelectorAll('.weight-input').forEach(input => {
-                input.value = '0';
-            });
-            
-            // Сбрасываем выбор даты
-            document.getElementById('dateSelect').value = '';
-            
-            // Обновляем общий вес
-            calculateTotalWeight();
-            
-            // Убираем сообщение об ошибке
-=======
 
     try {
+        // Имитация отправки на сервер
         const response = await mockServerRequest('/submit-order', {
             date: appState.selectedDate.toISOString().split('T')[0],
             products: products,
@@ -407,7 +216,7 @@ async function handleOrderSubmit() {
         });
 
         if (response.success) {
-            showNotification('Заказ успешно отправлен! Номер: ' + response.orderId);
+            showNotification('✅ Заказ успешно отправлен!\nНомер: ' + response.orderId);
 
             // Очищаем форму
             document.querySelectorAll('.weight-input').forEach(input => {
@@ -415,10 +224,11 @@ async function handleOrderSubmit() {
             });
 
             appState.selectedDate = null;
-            document.getElementById('datePickerInput').value = '';
-            renderCalendar();
+            document.querySelectorAll('.date-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+
             calculateTotalWeight();
->>>>>>> 16fc469 (Start)
             document.getElementById('orderError').textContent = '';
         } else {
             document.getElementById('orderError').textContent = 'Ошибка при отправке заказа';
@@ -426,14 +236,8 @@ async function handleOrderSubmit() {
     } catch (error) {
         document.getElementById('orderError').textContent = 'Ошибка сервера, попробуйте позже';
     } finally {
-<<<<<<< HEAD
-        // Возвращаем кнопку в исходное состояние
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = totalWeight < 35;
-=======
         submitBtn.textContent = originalText;
         calculateTotalWeight();
->>>>>>> 16fc469 (Start)
     }
 }
 
@@ -441,22 +245,6 @@ async function handleOrderSubmit() {
 function mockServerRequest(endpoint, data) {
     return new Promise((resolve) => {
         setTimeout(() => {
-<<<<<<< HEAD
-            console.log('Отправка данных на сервер:', endpoint, data);
-            
-            // Имитация успешного ответа
-            resolve({ 
-                success: true,
-                message: 'Заказ принят',
-                orderId: 'ORD_' + Math.random().toString(36).substr(2, 9).toUpperCase()
-            });
-        }, 1000); // Задержка 1 секунда для имитации сети
-    });
-}
-
-// Добавляем возможность быстрой очистки всех полей (для разработки)
-function resetAllFields() {
-=======
             console.log('Отправка данных:', endpoint, data);
             resolve({
                 success: true,
@@ -473,26 +261,21 @@ function showNotification(message) {
 
 // Функция сброса формы
 window.resetForm = function() {
->>>>>>> 16fc469 (Start)
     if (confirm('Сбросить все значения?')) {
         document.querySelectorAll('.weight-input').forEach(input => {
             input.value = '0';
         });
-<<<<<<< HEAD
-        document.getElementById('dateSelect').value = '';
-        calculateTotalWeight();
-        document.getElementById('orderError').textContent = '';
-    }
-}
-
-// Добавляем скрытую функцию сброса (можно вызвать из консоли)
-window.resetForm = resetAllFields;
-=======
         appState.selectedDate = null;
-        document.getElementById('datePickerInput').value = '';
-        renderCalendar();
+        document.querySelectorAll('.date-btn').forEach(btn => {
+            btn.classList.remove('selected');
+        });
         calculateTotalWeight();
         document.getElementById('orderError').textContent = '';
     }
 };
->>>>>>> 16fc469 (Start)
+
+// Функция для обновления дат из БД (будет вызываться извне)
+window.updateAvailableDates = function(dates) {
+    appState.availableDates = dates.map(dateStr => new Date(dateStr));
+    renderDatesButtons();
+};
