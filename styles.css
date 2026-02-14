@@ -16,21 +16,12 @@ body {
 }
 
 .container {
-<<<<<<< HEAD
-    max-width: 800px;
-    width: 100%;
-    background: white;
-    border-radius: 24px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-    padding: 24px 20px;
-=======
     max-width: 900px;
     width: 100%;
     background: white;
     border-radius: 28px;
     box-shadow: 0 15px 40px rgba(0,0,0,0.1);
     padding: 24px;
->>>>>>> 16fc469 (Start)
     margin: 20px 0;
 }
 
@@ -41,18 +32,6 @@ h2, h3 {
 }
 
 h2 {
-<<<<<<< HEAD
-    font-size: 1.5rem;
-}
-
-h3 {
-    font-size: 1.2rem;
-    margin-top: 24px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-=======
     font-size: 1.8rem;
 }
 
@@ -64,24 +43,10 @@ h3 {
 .form-group {
     margin-bottom: 25px;
     position: relative;
->>>>>>> 16fc469 (Start)
 }
 
 label {
     display: block;
-<<<<<<< HEAD
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: #2c3e50;
-    font-size: 0.95rem;
-}
-
-/* Стили для полей ввода */
-input[type="number"], 
-select {
-    width: 100%;
-    padding: 16px;
-=======
     margin-bottom: 12px;
     font-weight: 500;
     color: #2c3e50;
@@ -98,19 +63,10 @@ select {
 .date-picker-input {
     width: 100%;
     padding: 16px 20px;
->>>>>>> 16fc469 (Start)
     border: 2px solid #e1e8ed;
     border-radius: 16px;
     font-size: 1rem;
     outline: none;
-<<<<<<< HEAD
-    transition: border-color 0.2s;
-    background: white;
-}
-
-input:focus, select:focus {
-    border-color: #3498db;
-=======
     transition: all 0.2s;
     background: white;
     cursor: pointer;
@@ -316,16 +272,12 @@ input:focus, select:focus {
 .weight-input:focus {
     border-color: #3498db;
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
->>>>>>> 16fc469 (Start)
 }
 
 /* Убираем стрелки у number input */
 input[type="number"] {
     -moz-appearance: textfield;
-<<<<<<< HEAD
-=======
     appearance: textfield;
->>>>>>> 16fc469 (Start)
 }
 
 input[type="number"]::-webkit-outer-spin-button,
@@ -334,21 +286,6 @@ input[type="number"]::-webkit-inner-spin-button {
     margin: 0;
 }
 
-<<<<<<< HEAD
-/* Стили для кнопки */
-.primary-btn {
-    width: 100%;
-    padding: 16px;
-    background: #3498db;
-    color: white;
-    border: none;
-    border-radius: 16px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s, opacity 0.2s;
-    margin-top: 8px;
-=======
 /* Общий вес */
 .total-weight {
     text-align: right;
@@ -379,116 +316,27 @@ input[type="number"]::-webkit-inner-spin-button {
     display: block;
     height: 65px;
     letter-spacing: 0.5px;
->>>>>>> 16fc469 (Start)
 }
 
 .primary-btn:hover:not(:disabled) {
     background: #2980b9;
-<<<<<<< HEAD
-=======
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
 }
 
 .primary-btn:active:not(:disabled) {
     transform: translateY(0);
->>>>>>> 16fc469 (Start)
 }
 
 .primary-btn:disabled {
     background: #bdc3c7;
     cursor: not-allowed;
-<<<<<<< HEAD
-    opacity: 0.7;
-}
-
-/* Таблица продукции */
-.products-table {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin: 16px 0;
-    border: 2px solid #e1e8ed;
-    border-radius: 16px;
-    overflow: hidden;
-}
-
-.products-names, .products-weights {
-    display: flex;
-    flex-direction: column;
-}
-
-.product-row {
-    padding: 12px;
-    border-bottom: 1px solid #e1e8ed;
-    display: flex;
-    align-items: center;
-    min-height: 60px;
-}
-
-.product-row:last-child {
-    border-bottom: none;
-}
-
-.product-row.header {
-    background: #f8f9fa;
-    font-weight: 600;
-    color: #2c3e50;
-    border-bottom: 2px solid #dde2e6;
-}
-
-.products-names .product-row {
-    background: #fafbfc;
-    font-size: 0.95rem;
-    line-height: 1.4;
-    word-break: break-word;
-}
-
-.products-weights .product-row {
-    padding: 8px;
-}
-
-.weight-input {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #e1e8ed;
-    border-radius: 12px;
-    font-size: 1rem;
-    text-align: center;
-    background: white;
-}
-
-.weight-input:focus {
-    border-color: #3498db;
-    outline: none;
-}
-
-/* Общий вес */
-.total-weight {
-    text-align: right;
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin: 20px 0;
-    padding: 16px;
-    background: #f0f7ff;
-    border-radius: 16px;
-    color: #2c3e50;
-=======
     opacity: 0.6;
->>>>>>> 16fc469 (Start)
 }
 
 /* Сообщения об ошибках */
 .error-message {
     color: #e74c3c;
-<<<<<<< HEAD
-    font-size: 0.9rem;
-    margin-top: 8px;
-    min-height: 20px;
-}
-
-/* Адаптация для мобильных устройств */
-=======
     font-size: 1rem;
     margin-top: 15px;
     min-height: 24px;
@@ -502,20 +350,20 @@ input[type="number"]::-webkit-inner-spin-button {
         max-width: 1000px;
         padding: 30px;
     }
-
+    
     .date-picker-wrapper {
         max-width: 400px;
     }
-
+    
     .products-grid {
         grid-template-columns: 2.2fr 1fr;
     }
-
+    
     .grid-cell-name {
         padding: 18px 25px;
         font-size: 1.1rem;
     }
-
+    
     .weight-input {
         max-width: 150px;
         font-size: 1.1rem;
@@ -528,97 +376,41 @@ input[type="number"]::-webkit-inner-spin-button {
         padding: 24px;
         max-width: 800px;
     }
-
+    
     .date-picker-wrapper {
         max-width: 350px;
     }
-
+    
     .calendar-dropdown {
         width: 320px;
     }
-
+    
     .products-grid {
         grid-template-columns: 1.8fr 1fr;
     }
-
+    
     .grid-cell-name {
         padding: 14px 18px;
         font-size: 0.95rem;
     }
-
+    
     .weight-input {
         max-width: 120px;
         padding: 10px;
     }
-
+    
     .primary-btn {
         max-width: 100%;
     }
 }
 
 /* Мобильные устройства */
->>>>>>> 16fc469 (Start)
 @media (max-width: 600px) {
     body {
         padding: 8px;
     }
 
     .container {
-<<<<<<< HEAD
-        padding: 16px 12px;
-        border-radius: 20px;
-    }
-
-    h2 {
-        font-size: 1.3rem;
-        margin-bottom: 16px;
-    }
-
-    input[type="number"], 
-    select,
-    .primary-btn {
-        padding: 14px;
-        font-size: 16px; /* Предотвращает зум на iOS */
-    }
-
-    .products-table {
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-        border-radius: 12px;
-    }
-
-    .product-row {
-        padding: 8px;
-        min-height: 70px;
-        font-size: 0.9rem;
-    }
-
-    .products-weights .product-row {
-        padding: 4px;
-    }
-
-    .weight-input {
-        padding: 10px;
-        font-size: 16px;
-    }
-
-    .total-weight {
-        font-size: 1.1rem;
-        padding: 12px;
-        margin: 16px 0;
-    }
-}
-
-/* Для очень маленьких экранов */
-@media (max-width: 380px) {
-    .products-names .product-row {
-        font-size: 0.8rem;
-        padding: 6px;
-    }
-
-    .product-row {
-        min-height: 65px;
-=======
         padding: 16px;
         border-radius: 24px;
         margin: 10px 0;
@@ -628,7 +420,7 @@ input[type="number"]::-webkit-inner-spin-button {
         font-size: 1.4rem;
         margin-bottom: 15px;
     }
-
+    
     h3 {
         font-size: 1.2rem;
         margin-top: 18px;
@@ -637,13 +429,13 @@ input[type="number"]::-webkit-inner-spin-button {
     .date-picker-wrapper {
         max-width: 100%;
     }
-
+    
     .date-picker-input {
         padding: 14px 16px;
         height: 55px;
         font-size: 1rem;
     }
-
+    
     .calendar-dropdown {
         width: 100%;
         min-width: 280px;
@@ -651,25 +443,25 @@ input[type="number"]::-webkit-inner-spin-button {
         right: 0;
         padding: 15px;
     }
-
+    
     .calendar-header {
         margin-bottom: 15px;
     }
-
+    
     .current-month {
         font-size: 1.1rem;
     }
-
+    
     .calendar-nav-btn {
         width: 38px;
         height: 38px;
     }
-
+    
     .calendar-weekdays div {
         font-size: 0.8rem;
         padding: 5px 0;
     }
-
+    
     .calendar-day {
         font-size: 0.9rem;
         aspect-ratio: 1;
@@ -680,23 +472,23 @@ input[type="number"]::-webkit-inner-spin-button {
         border-radius: 14px;
         margin: 15px 0;
     }
-
+    
     .grid-header {
         padding: 12px 12px;
         font-size: 1rem;
     }
-
+    
     .grid-cell-name {
         padding: 12px 12px;
         font-size: 0.9rem;
         min-height: 65px;
         line-height: 1.3;
     }
-
+    
     .grid-cell-weight {
         padding: 8px 8px;
     }
-
+    
     .weight-input {
         max-width: 90px;
         padding: 10px 5px;
@@ -711,7 +503,7 @@ input[type="number"]::-webkit-inner-spin-button {
         margin: 18px 0 15px;
         border-radius: 16px;
     }
-
+    
     .primary-btn {
         max-width: 100%;
         height: 60px;
@@ -726,24 +518,24 @@ input[type="number"]::-webkit-inner-spin-button {
     .products-grid {
         grid-template-columns: 1.4fr 1fr;
     }
-
+    
     .grid-cell-name {
         padding: 10px 8px;
         font-size: 0.85rem;
         min-height: 60px;
     }
-
+    
     .weight-input {
         max-width: 75px;
         padding: 8px 3px;
         font-size: 0.9rem;
         height: 42px;
     }
-
+    
     .calendar-dropdown {
         padding: 12px;
     }
-
+    
     .calendar-day {
         font-size: 0.85rem;
     }
@@ -754,19 +546,18 @@ input[type="number"]::-webkit-inner-spin-button {
     .container {
         padding: 12px;
     }
-
+    
     .products-grid {
         margin: 10px 0;
     }
-
+    
     .grid-cell-name {
         min-height: 50px;
         padding: 8px 12px;
     }
-
+    
     .calendar-dropdown {
         max-height: 80vh;
         overflow-y: auto;
->>>>>>> 16fc469 (Start)
     }
 }
