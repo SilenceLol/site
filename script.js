@@ -15,6 +15,9 @@ function initApp() {
     // Обработчики для полей ввода веса
     const weightInputs = document.querySelectorAll('.weight-input');
     weightInputs.forEach(input => {
+        // Убираем value="0" и добавляем пустой placeholder
+        input.value = '';
+
         input.addEventListener('input', calculateTotalWeight);
         input.addEventListener('blur', validateInput);
         input.addEventListener('keypress', function(e) {
@@ -37,14 +40,6 @@ function loadAvailableDates() {
 
     // Имитация запроса к серверу
     setTimeout(() => {
-        // В будущем здесь будет реальный запрос к БД
-        // fetch('/api/available-dates')
-        //   .then(response => response.json())
-        //   .then(dates => {
-        //       appState.availableDates = dates;
-        //       renderDatesButtons();
-        //   });
-
         // Генерируем 3 ближайшие даты
         appState.availableDates = generateNextDates(3);
         renderDatesButtons();
@@ -100,12 +95,6 @@ function renderDatesButtons() {
         dateBtn.className = 'date-btn';
         dateBtn.dataset.date = dateStr;
 
-        // Проверяем, выбрана ли эта дата
-        if (appState.selectedDate &&
-            appState.selectedDate.toDateString() === date.toDateString()) {
-            dateBtn.classList.add('selected');
-        }
-
         dateBtn.innerHTML = `
             <span class="date-icon">${day}</span>
             <span class="date-info">
@@ -141,14 +130,14 @@ function validateInput(e) {
     let value = e.target.value.trim();
 
     if (value === '' || value === '-') {
-        e.target.value = '0';
+        e.target.value = '';
     } else {
         value = value.replace(',', '.');
         let num = parseFloat(value);
         if (!isNaN(num) && num >= 0) {
             e.target.value = Math.round(num * 10) / 10;
         } else {
-            e.target.value = '0';
+            e.target.value = '';
         }
     }
 
@@ -159,11 +148,13 @@ function validateInput(e) {
 function calculateTotalWeight() {
     const weightInputs = document.querySelectorAll('.weight-input');
     let total = 0;
+    let hasValue = false;
 
     weightInputs.forEach(input => {
         const value = parseFloat(input.value);
         if (!isNaN(value) && value > 0) {
             total += value;
+            hasValue = true;
         }
     });
 
@@ -175,11 +166,16 @@ function calculateTotalWeight() {
     const submitBtn = document.getElementById('orderSubmitBtn');
     const dateSelected = appState.selectedDate !== null;
 
-    submitBtn.disabled = total < 35 || !dateSelected;
+    // Кнопка активна только если выбрана дата И общий вес >= 35
+    submitBtn.disabled = !dateSelected || total < 35;
+
+    console.log('Кнопка отправки:', {dateSelected, total, disabled: submitBtn.disabled});
 }
 
 // Отправка заказа
 async function handleOrderSubmit() {
+    console.log('Отправка заказа...');
+
     if (!appState.selectedDate) {
         document.getElementById('orderError').textContent = 'Выберите дату вывоза';
         return;
@@ -220,7 +216,7 @@ async function handleOrderSubmit() {
 
             // Очищаем форму
             document.querySelectorAll('.weight-input').forEach(input => {
-                input.value = '0';
+                input.value = '';
             });
 
             appState.selectedDate = null;
@@ -263,7 +259,7 @@ function showNotification(message) {
 window.resetForm = function() {
     if (confirm('Сбросить все значения?')) {
         document.querySelectorAll('.weight-input').forEach(input => {
-            input.value = '0';
+            input.value = '';
         });
         appState.selectedDate = null;
         document.querySelectorAll('.date-btn').forEach(btn => {
@@ -279,3 +275,4 @@ window.updateAvailableDates = function(dates) {
     appState.availableDates = dates.map(dateStr => new Date(dateStr));
     renderDatesButtons();
 };
+
