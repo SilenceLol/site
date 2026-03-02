@@ -169,7 +169,7 @@ label {
     border: 2px dashed #e1e8ed;
 }
 
-/* Стили для сетки товаров */
+/* Стили для сетки товаров - без прокрутки */
 .products-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -381,11 +381,13 @@ input[type="number"]::-webkit-inner-spin-button {
     }
 }
 
-/* Планшеты - ИСПРАВЛЕННАЯ ВЕРСИЯ */
+/* Планшеты - без прокрутки */
 @media (min-width: 601px) and (max-width: 1023px) {
     body {
         padding: 12px;
         align-items: center;
+        height: auto;
+        overflow: auto;
     }
 
     .container {
@@ -393,6 +395,8 @@ input[type="number"]::-webkit-inner-spin-button {
         max-width: 900px;
         margin: 10px 0;
         border-radius: 24px;
+        height: auto;
+        overflow: visible;
     }
 
     h2 {
@@ -454,20 +458,20 @@ input[type="number"]::-webkit-inner-spin-button {
         overflow: hidden;
     }
 
+    /* Таблица без прокрутки */
     .products-grid {
         grid-template-columns: 1.9fr 1fr;
         border-radius: 18px;
         margin: 15px 0;
-        max-height: 400px;
-        overflow-y: auto;
+        max-height: none;
+        overflow: visible;
     }
 
     .grid-header {
         padding: 12px 15px;
         font-size: 1rem;
-        position: sticky;
-        top: 0;
-        z-index: 5;
+        position: relative;
+        top: auto;
     }
 
     .grid-cell-name {
@@ -507,235 +511,202 @@ input[type="number"]::-webkit-inner-spin-button {
     }
 }
 
-/* Мобильные устройства - ИСПРАВЛЕННАЯ ВЕРСИЯ */
+/* Мобильные устройства - без прокрутки */
 @media (max-width: 600px) {
     body {
         padding: 0;
         background: #f5f7fa;
-        height: 100vh;
-        overflow: hidden;
-        display: flex;
-        align-items: flex-start;
-        position: fixed;
+        height: auto;
+        overflow: auto;
+        display: block;
+        position: relative;
         width: 100%;
     }
 
     .container {
         max-width: 100%;
         width: 100%;
-        height: 100vh;
-        padding: 12px 12px 8px 12px;
+        height: auto;
+        min-height: 100vh;
+        padding: 16px 12px 20px 12px;
         border-radius: 0;
         margin: 0;
         box-shadow: none;
-        display: flex;
-        flex-direction: column;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
+        display: block;
+        overflow: visible;
     }
 
     h2 {
-        font-size: 1.3rem;
-        margin-bottom: 8px;
-        flex-shrink: 0;
+        font-size: 1.4rem;
+        margin-bottom: 12px;
     }
 
     h3 {
-        font-size: 1.1rem;
-        margin: 8px 0 6px 0;
-        flex-shrink: 0;
+        font-size: 1.2rem;
+        margin: 12px 0 8px 0;
     }
 
     .form-group {
-        margin-bottom: 8px;
-        flex-shrink: 0;
+        margin-bottom: 12px;
     }
 
     label {
-        margin-bottom: 4px;
-        font-size: 0.9rem;
+        margin-bottom: 6px;
+        font-size: 0.95rem;
     }
 
-    /* Даты фиксированы в ряд без прокрутки */
+    /* Даты фиксированы в ряд */
     .dates-buttons {
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: space-between;
-        gap: 6px;
+        gap: 8px;
         margin: 4px 0 0 0;
         width: 100%;
-        overflow: visible;
-        padding-bottom: 0;
     }
 
     .date-btn {
         flex: 1;
         min-width: 0;
         width: auto;
-        padding: 8px 6px;
-        border-radius: 14px;
-        gap: 6px;
+        padding: 10px 8px;
+        border-radius: 16px;
+        gap: 8px;
         margin: 0;
     }
 
     .date-icon {
-        width: 34px;
-        height: 34px;
-        font-size: 1.1rem;
+        width: 36px;
+        height: 36px;
+        font-size: 1.2rem;
         border-radius: 10px;
-        flex-shrink: 0;
     }
 
     .date-number {
-        font-size: 0.85rem;
-        line-height: 1.2;
+        font-size: 0.9rem;
         white-space: nowrap;
     }
 
     .date-weekday {
-        font-size: 0.7rem;
+        font-size: 0.75rem;
         white-space: nowrap;
     }
 
-    .date-info {
-        min-width: 0;
-        overflow: hidden;
-    }
-
-    /* Таблица занимает оставшееся место с прокруткой */
+    /* Таблица без прокрутки */
     .products-grid {
         display: grid;
-        grid-template-columns: 1.4fr 0.8fr;
-        border-radius: 12px;
-        margin: 4px 0 4px 0;
+        grid-template-columns: 1.5fr 1fr;
+        border-radius: 14px;
+        margin: 12px 0;
         border-width: 1.5px;
-        flex: 1 1 auto;
-        min-height: 0;
         max-height: none;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
+        overflow: visible;
     }
 
     .grid-header {
-        padding: 8px 8px;
-        font-size: 0.9rem;
-        position: sticky;
-        top: 0;
-        z-index: 5;
-        border-bottom-width: 1.5px;
+        padding: 10px 12px;
+        font-size: 0.95rem;
+        position: relative;
+        top: auto;
     }
 
     .grid-cell-name {
-        padding: 8px 8px;
-        font-size: 0.8rem;
-        min-height: 52px;
-        line-height: 1.2;
-        border-right-width: 1.5px;
-        border-bottom-width: 0.5px;
-        word-break: break-word;
+        padding: 10px 12px;
+        font-size: 0.85rem;
+        min-height: 50px;
+        line-height: 1.3;
     }
 
     .grid-cell-weight {
-        padding: 4px 4px;
-        border-bottom-width: 0.5px;
+        padding: 6px 8px;
     }
 
     .weight-input {
-        max-width: 70px;
-        padding: 6px 2px;
-        height: 38px;
-        font-size: 0.85rem;
-        border-radius: 8px;
-        border-width: 1.5px;
+        max-width: 80px;
+        padding: 8px 4px;
+        height: 40px;
+        font-size: 0.9rem;
+        border-radius: 10px;
     }
 
     /* Общий вес */
     .total-weight {
-        font-size: 1rem;
-        padding: 8px 12px;
-        margin: 4px 0 4px 0;
-        border-radius: 12px;
-        border-width: 1.5px;
-        flex-shrink: 0;
+        font-size: 1.1rem;
+        padding: 12px 16px;
+        margin: 12px 0 12px;
+        border-radius: 14px;
     }
 
     /* Кнопка отправки */
     .primary-btn {
         max-width: 100%;
-        height: 48px;
-        padding: 12px;
-        font-size: 1rem;
-        border-radius: 14px;
-        margin: 4px 0 0 0;
-        flex-shrink: 0;
+        height: 52px;
+        padding: 14px;
+        font-size: 1.1rem;
+        border-radius: 16px;
+        margin: 8px 0 0;
     }
 
     .error-message {
-        font-size: 0.85rem;
-        margin-top: 4px;
-        min-height: 20px;
-        flex-shrink: 0;
+        font-size: 0.9rem;
+        margin-top: 8px;
+        min-height: 22px;
     }
 
     .loading-dates {
-        padding: 15px;
-        font-size: 0.9rem;
+        padding: 20px;
+        font-size: 0.95rem;
     }
 }
 
 /* Очень маленькие экраны */
 @media (max-width: 380px) {
     .date-btn {
-        padding: 6px 4px;
-        gap: 4px;
+        padding: 8px 6px;
+        gap: 6px;
     }
 
     .date-icon {
-        width: 30px;
-        height: 30px;
-        font-size: 1rem;
+        width: 32px;
+        height: 32px;
+        font-size: 1.1rem;
     }
 
     .date-number {
-        font-size: 0.75rem;
+        font-size: 0.8rem;
     }
 
     .date-weekday {
-        font-size: 0.6rem;
+        font-size: 0.65rem;
     }
 
     .products-grid {
-        grid-template-columns: 1.3fr 0.7fr;
+        grid-template-columns: 1.4fr 1fr;
     }
 
     .grid-cell-name {
-        padding: 6px 6px;
-        font-size: 0.75rem;
-        min-height: 48px;
+        padding: 8px 8px;
+        font-size: 0.8rem;
+        min-height: 45px;
     }
 
     .weight-input {
-        max-width: 60px;
-        padding: 4px 2px;
-        height: 34px;
-        font-size: 0.8rem;
-    }
-}
-
-/* Очень высокие экраны */
-@media (min-height: 700px) and (max-width: 600px) {
-    .container {
-        padding: 16px 12px 10px 12px;
+        max-width: 65px;
+        padding: 6px 2px;
+        height: 36px;
+        font-size: 0.85rem;
     }
 
-    .products-grid {
-        margin: 8px 0 8px 0;
+    .total-weight {
+        font-size: 1rem;
+        padding: 10px 14px;
     }
 
-    .grid-cell-name {
-        min-height: 58px;
-        padding: 10px 8px;
+    .primary-btn {
+        height: 48px;
+        padding: 12px;
+        font-size: 1rem;
     }
 }
 
@@ -760,7 +731,6 @@ input[type="number"]::-webkit-inner-spin-button {
 
     .products-grid {
         margin: 10px 0;
-        max-height: 250px;
     }
 
     .grid-cell-name {
@@ -768,3 +738,4 @@ input[type="number"]::-webkit-inner-spin-button {
         padding: 6px 10px;
     }
 }
+

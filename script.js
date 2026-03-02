@@ -8,41 +8,7 @@ let appState = {
 document.addEventListener('DOMContentLoaded', function() {
     initApp();
     loadAvailableDates();
-    optimizeForMobile();
 });
-
-// Оптимизация для мобильных устройств
-function optimizeForMobile() {
-    if (window.innerWidth <= 600) {
-        // Устанавливаем высоту контейнера с учетом адресной строки браузера
-        const setVh = () => {
-            const vh = window.innerHeight * 0.01;
-            document.documentElement.style.setProperty('--vh', `${vh}px`);
-
-            const container = document.querySelector('.container');
-            if (container) {
-                container.style.height = `calc(var(--vh, 1vh) * 100)`;
-            }
-        };
-
-        setVh();
-        window.addEventListener('resize', setVh);
-
-        // Блокируем прокрутку body
-        document.body.style.overflow = 'hidden';
-        document.body.style.height = '100vh';
-        document.body.style.position = 'fixed';
-        document.body.style.width = '100%';
-    } else {
-        // Для планшетов и десктопа
-        document.body.style.overflow = 'auto';
-        document.body.style.position = 'relative';
-        document.body.style.height = 'auto';
-    }
-}
-
-// Вызываем при изменении размера окна
-window.addEventListener('resize', optimizeForMobile);
 
 // Инициализация обработчиков событий
 function initApp() {
@@ -303,3 +269,4 @@ window.updateAvailableDates = function(dates) {
     appState.availableDates = dates.map(dateStr => new Date(dateStr));
     renderDatesButtons();
 };
+
