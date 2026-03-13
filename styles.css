@@ -1,0 +1,709 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: fixed;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background: #f5f7fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f5f7fa;
+}
+
+.content-wrapper {
+    max-width: 1000px;
+    width: 100%;
+    height: 98vh;
+    background: white;
+    border-radius: 28px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    padding: 16px 24px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+h2, h3 {
+    color: #1a2b3c;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+}
+
+h3 {
+    font-size: 1.4rem;
+    margin: 8px 0 12px 0;
+}
+
+.form-group {
+    margin-bottom: 12px;
+    flex-shrink: 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #2c3e50;
+    font-size: 1rem;
+}
+
+/* Стили для кнопок с датами */
+.dates-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 0;
+    flex-shrink: 0;
+}
+
+.date-btn {
+    flex: 1;
+    background: white;
+    border: 2px solid #e1e8ed;
+    border-radius: 20px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: relative;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.date-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.date-btn:hover {
+    border-color: #3498db;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(52, 152, 219, 0.2);
+}
+
+.date-btn:hover::before {
+    opacity: 1;
+}
+
+.date-btn.selected {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border-color: #2980b9;
+    box-shadow: 0 12px 24px rgba(52, 152, 219, 0.3);
+}
+
+.date-btn.selected .date-icon,
+.date-btn.selected .date-number,
+.date-btn.selected .date-weekday {
+    color: white;
+}
+
+.date-icon {
+    width: 48px;
+    height: 48px;
+    background: #f0f7ff;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #3498db;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.date-btn.selected .date-icon {
+    background: rgba(255, 255, 255, 0.25);
+    color: white;
+}
+
+.date-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+}
+
+.date-number {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1a2b3c;
+    line-height: 1.2;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.date-weekday {
+    font-size: 0.95rem;
+    color: #7f8c8d;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.date-weekday::first-letter {
+    text-transform: uppercase;
+}
+
+.loading-dates {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    color: #95a5a6;
+    font-size: 1rem;
+    background: #f8f9fa;
+    border-radius: 20px;
+    border: 2px dashed #e1e8ed;
+}
+
+/* Стили для сетки товаров */
+.products-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    border: 2px solid #e1e8ed;
+    border-radius: 20px;
+    overflow-y: auto;
+    background: white;
+    flex: 1;
+    min-height: 0;
+}
+
+.grid-header {
+    padding: 14px 20px;
+    background: #e9ecef;
+    font-weight: 700;
+    color: #1a2b3c;
+    font-size: 1.1rem;
+    border-bottom: 2px solid #ced4da;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.grid-header-name {
+    border-right: 2px solid #ced4da;
+}
+
+.grid-row {
+    display: contents;
+}
+
+.grid-cell-name {
+    padding: 12px 20px;
+    background: #fafbfc;
+    border-bottom: 1px solid #e1e8ed;
+    border-right: 2px solid #e1e8ed;
+    font-size: 1rem;
+    line-height: 1.3;
+    color: #2c3e50;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.grid-cell-weight {
+    padding: 8px 20px;
+    background: white;
+    border-bottom: 1px solid #e1e8ed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid-row:last-child .grid-cell-name,
+.grid-row:last-child .grid-cell-weight {
+    border-bottom: none;
+}
+
+.weight-input {
+    width: 100%;
+    max-width: 120px;
+    padding: 10px 12px;
+    border: 2px solid #e1e8ed;
+    border-radius: 14px;
+    font-size: 1rem;
+    text-align: center;
+    background: white;
+    height: 44px;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.weight-input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+/* Убираем стрелки у number input */
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Общий вес */
+.total-weight {
+    text-align: right;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 12px 0 10px;
+    padding: 14px 20px;
+    background: #f0f7ff;
+    border-radius: 18px;
+    color: #2c3e50;
+    border: 2px solid #d4e4f5;
+    flex-shrink: 0;
+}
+
+/* Кнопка отправки */
+.primary-btn {
+    width: 100%;
+    max-width: 300px;
+    padding: 14px 30px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 auto 8px;
+    display: block;
+    height: 56px;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.primary-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.primary-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.primary-btn:hover:not(:disabled) {
+    background: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(52, 152, 219, 0.4);
+}
+
+.primary-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.primary-btn:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none;
+    box-shadow: none;
+}
+
+.primary-btn:disabled::before {
+    display: none;
+}
+
+/* Сообщения об ошибках */
+.error-message {
+    color: #e74c3c;
+    font-size: 0.95rem;
+    margin-top: 6px;
+    min-height: 20px;
+    text-align: center;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+/* Стили для авторизации */
+.auth-wrapper {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.header-with-logout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-shrink: 0;
+}
+
+.header-with-logout h2 {
+    margin-bottom: 0;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    color: #7f8c8d;
+}
+
+.logout-btn:hover {
+    background: #f0f0f0;
+    color: #e74c3c;
+    transform: scale(1.1);
+}
+
+.phone-input, .sms-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e1e8ed;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    background: white;
+    outline: none;
+}
+
+.phone-input:focus, .sms-input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.auth-subtitle {
+    color: #7f8c8d;
+    margin-bottom: 24px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.auth-btn {
+    margin-top: 16px;
+    width: 100%;
+    max-width: none;
+}
+
+/* Десктоп */
+@media (min-width: 1024px) {
+    .content-wrapper {
+        max-width: 1000px;
+        padding: 20px 30px;
+    }
+
+    .date-btn {
+        padding: 14px 20px;
+    }
+
+    .date-icon {
+        width: 52px;
+        height: 52px;
+        font-size: 1.8rem;
+    }
+
+    .date-number {
+        font-size: 1.3rem;
+    }
+
+    .date-weekday {
+        font-size: 1rem;
+    }
+
+    .grid-cell-name {
+        padding: 14px 20px;
+        font-size: 1.05rem;
+    }
+
+    .weight-input {
+        max-width: 130px;
+    }
+}
+
+/* Планшеты */
+@media (min-width: 601px) and (max-width: 1023px) {
+    .content-wrapper {
+        max-width: 900px;
+        padding: 16px 24px;
+    }
+
+    h2 {
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+        margin: 6px 0 10px;
+    }
+
+    .date-btn {
+        padding: 10px 14px;
+        gap: 10px;
+    }
+
+    .date-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 1.4rem;
+    }
+
+    .date-number {
+        font-size: 1.1rem;
+    }
+
+    .date-weekday {
+        font-size: 0.85rem;
+    }
+
+    .grid-cell-name {
+        padding: 10px 16px;
+        font-size: 0.95rem;
+    }
+
+    .weight-input {
+        max-width: 100px;
+        padding: 8px 10px;
+        height: 40px;
+    }
+
+    .total-weight {
+        font-size: 1.1rem;
+        padding: 12px 18px;
+    }
+
+    .primary-btn {
+        height: 52px;
+        font-size: 1.1rem;
+    }
+}
+
+/* Мобильные устройства */
+@media (max-width: 600px) {
+    .content-wrapper {
+        height: 100vh;
+        padding: 12px 16px;
+        border-radius: 0;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+        margin-bottom: 8px;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+        margin: 4px 0 8px;
+    }
+
+    .form-group {
+        margin-bottom: 8px;
+    }
+
+    label {
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+    }
+
+    .dates-buttons {
+        gap: 6px;
+    }
+
+    .date-btn {
+        padding: 8px 8px;
+        gap: 6px;
+        border-radius: 16px;
+    }
+
+    .date-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 1.2rem;
+        border-radius: 10px;
+    }
+
+    .date-number {
+        font-size: 0.9rem;
+    }
+
+    .date-weekday {
+        font-size: 0.7rem;
+    }
+
+    .products-grid {
+        border-radius: 16px;
+    }
+
+    .grid-header {
+        padding: 8px 12px;
+        font-size: 0.95rem;
+    }
+
+    .grid-cell-name {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+
+    .grid-cell-weight {
+        padding: 4px 8px;
+    }
+
+    .weight-input {
+        max-width: 70px;
+        padding: 6px 4px;
+        height: 36px;
+        font-size: 0.9rem;
+        border-radius: 10px;
+    }
+
+    .total-weight {
+        font-size: 1rem;
+        padding: 10px 14px;
+        margin: 8px 0 6px;
+    }
+
+    .primary-btn {
+        height: 48px;
+        padding: 10px;
+        font-size: 1rem;
+        margin-bottom: 4px;
+    }
+
+    .error-message {
+        font-size: 0.85rem;
+        margin-top: 4px;
+    }
+    
+    .auth-container {
+        padding: 0;
+    }
+    
+    .phone-input, .sms-input {
+        padding: 12px 14px;
+        font-size: 1rem;
+    }
+}
+
+/* Очень маленькие экраны */
+@media (max-width: 360px) {
+    .content-wrapper {
+        padding: 8px 12px;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+        margin-bottom: 4px;
+    }
+
+    h3 {
+        font-size: 1.1rem;
+        margin: 2px 0 4px;
+    }
+
+    .date-btn {
+        padding: 6px 4px;
+    }
+
+    .date-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+    }
+
+    .date-number {
+        font-size: 0.8rem;
+    }
+
+    .date-weekday {
+        font-size: 0.6rem;
+    }
+
+    .grid-header {
+        padding: 6px 8px;
+        font-size: 0.9rem;
+    }
+
+    .grid-cell-name {
+        padding: 6px 8px;
+        font-size: 0.8rem;
+    }
+
+    .weight-input {
+        max-width: 60px;
+        padding: 4px 2px;
+        height: 32px;
+        font-size: 0.8rem;
+    }
+
+    .total-weight {
+        font-size: 0.95rem;
+        padding: 8px 12px;
+        margin: 6px 0 4px;
+    }
+
+    .primary-btn {
+        height: 44px;
+        font-size: 0.95rem;
+    }
+}
